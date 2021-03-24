@@ -1,25 +1,161 @@
-import logo from './logo.svg';
-import './App.css';
+import "./App.css";
+import { Navbar, Nav, Form, FormControl, Modal, Button } from "react-bootstrap";
+import { FaShoppingCart } from "react-icons/fa";
+import { Component } from "react";
+import BookDetails from "./components/BookDetails";
+import BookForm from "./components/BookForm";
 
-function App() {
-  return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
-    </div>
-  );
+class App extends Component {
+  query="popular";
+  state = {
+    cart: 0,
+    books: [],
+    show: false,
+  };
+
+  handleCloseModel = () => {
+    this.setState({ show: !this.state.show });
+  };
+
+  addToCart = (value) => {
+    this.setState({ cart: this.state.cart + 1 });
+  };
+
+  handleFilterChange = (event) => {
+    let val = event.target.value;
+  
+    if (val === "1") this.query="popular";
+    if (val === "2") this.query="new";
+    if (val === "3") this.query="collection";
+    if (val === "4") this.query="authors";
+  
+    fetch('http://localhost:8081/api/'+this.query)
+    .then(response => response.json())
+    .then(data => {
+      this.setState({books:data});
+    });
+  };
+
+  onSearchChangeHandler=(event)=>{
+  
+    let val = event.target.value;
+    if(val){
+      fetch('http://localhost:8081/api/'+val)
+      .then(response => response.json())
+      .then(data => {
+        this.setState({books:data});
+      });
+    }
+    else{
+      fetch('http://localhost:8081/api/'+this.query)
+      .then(response => response.json())
+      .then(data => {
+        this.setState({books:data});
+      });
+    }
+  }
+
+  componentDidMount(){
+    fetch('http://localhost:8081/api/popular')
+        .then(response => response.json())
+        .then(data => {
+          this.setState({books:data});
+        });
+  }
+
+  addBookhandler = (data) => {
+    fetch("http://localhost:8081/api/book/", {
+      method: "POST",
+      headers: {
+        Accept: "application/json",
+        "Content-Type": "application/json",
+      },
+      body: JSON.stringify(data)
+    }).then(response => response.json()).then(out=>{
+      console.log(out);
+      fetch('http://localhost:8081/api/'+this.query)
+      .then(response => response.json())
+      .then(data => {
+        this.setState({books:data});
+      });
+    });
+  };
+
+  render() {
+    return (
+      <div className="container">
+        <Navbar bg="light" expand="lg">
+          <Navbar.Brand href="#home">BookStore</Navbar.Brand>
+          <Navbar.Toggle aria-controls="basic-navbar-nav" />
+          <Navbar.Collapse id="basic-navbar-nav">
+            <Nav className="mr-auto"></Nav>
+            <Form inline style={{ marginRight: "20px " }}>
+              <FormControl
+                type="text"
+                placeholder="Search"
+                className="mr-sm-2"
+                onChange={this.onSearchChangeHandler.bind(this)}
+              />
+            </Form>
+            <a href="#">
+              <FaShoppingCart />
+              <sup>{this.state.cart > 0 && this.state.cart}</sup>
+            </a>
+          </Navbar.Collapse>
+        </Navbar>
+        <div style={{ marginTop: "25px" }}>
+          <div className="d-flex justify-content-between">
+            <div>
+              <Form.Group>
+                <FormControl
+                  as="select"
+                  style={{ width: "200px" }}
+                  onChange={this.handleFilterChange.bind(this)}
+                >
+                  <option value="1">Popular</option>
+                  <option value="2">New Releases</option>
+                  <option value="3">Collection</option>
+                  <option value="4">Authors</option>
+                </FormControl>
+              </Form.Group>
+            </div>
+
+            <div>
+              <Button onClick={this.handleCloseModel}>Add new Book</Button>
+
+              <Modal
+                animation={false}
+                show={this.state.show}
+                onHide={this.handleCloseModel}
+                size="lg"
+                aria-labelledby="contained-modal-title-vcenter"
+                centered
+              >
+                <Modal.Header closeButton>
+                  <Modal.Title>Add a new Book</Modal.Title>
+                </Modal.Header>
+                <Modal.Body>
+                  <BookForm
+                    handleCloseModel={this.handleCloseModel}
+                    addBookhandler={this.addBookhandler}
+                  />
+                </Modal.Body>
+              </Modal>
+            </div>
+          </div>
+        </div>
+        <div className="row" style={{ marginTop: "5px" }}>
+          {this.state.books.map((b, i) => {
+            return (
+              <div className="col-4" key={i} style={{ marginBottom: "20px" }}>
+                <BookDetails book={b} addToCart={this.addToCart} />
+              </div>
+            );
+          })}
+        </div>
+      </div>
+    );
+  }
 }
 
 export default App;
