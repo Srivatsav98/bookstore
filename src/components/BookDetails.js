@@ -16,7 +16,9 @@ const BookDetails = (props) => {
             <li>Price:  ${props.book.price}</li>
             <li>Year:  {props.book.year}</li>
             <br/>
-            <button className="btn btn-primary" onClick={e => props.addToCart(props.book)}>Buy</button>
+
+           { props.cartBooks.indexOf(props.book)===-1  && <button className="btn btn-primary" onClick={e => props.addToCart(props.book)}>Buy</button>}
+           { props.cartBooks.indexOf(props.book)>-1  && <button className="btn btn-danger" onClick={e => props.removeFromCart(props.book)}>Remove</button>}
           </ul>
         </div>
       </div>

@@ -4,23 +4,41 @@ import { FaShoppingCart } from "react-icons/fa";
 import { Component } from "react";
 import BookDetails from "./components/BookDetails";
 import BookForm from "./components/BookForm";
+import CartItems from "./components/cartitems";
 
 class App extends Component {
   query="popular";
   state = {
-    cart: 0,
     books: [],
     show: false,
+    cartShow: false,
+    cartBooks: []
   };
+
+
 
   handleCloseModel = () => {
     this.setState({ show: !this.state.show });
   };
 
-  addToCart = (value) => {
-    this.setState({ cart: this.state.cart + 1 });
+  handleCartCloseModel = () => {
+    this.setState({ cartShow: !this.state.cartShow });
   };
 
+  addToCart = (book) => {
+    let books=this.state.cartBooks;
+    books.push(book);
+    this.setState({ cartBooks: books });
+  };
+
+  removeFromCart = (book) => {
+    let books=this.state.cartBooks;
+    const index = books.indexOf(book);
+    if (index > -1) {
+      books.splice(index, 1);
+    }
+    this.setState({ cartBooks: books });
+  };
   handleFilterChange = (event) => {
     let val = event.target.value;
   
@@ -98,8 +116,8 @@ class App extends Component {
               />
             </Form>
             <a href="#">
-              <FaShoppingCart />
-              <sup>{this.state.cart > 0 && this.state.cart}</sup>
+              <FaShoppingCart onClick={this.handleCartCloseModel} />
+              <sup>{this.state.cartBooks.length > 0 && this.state.cartBooks.length}</sup>
             </a>
           </Navbar.Collapse>
         </Navbar>
@@ -138,9 +156,33 @@ class App extends Component {
                   <BookForm
                     handleCloseModel={this.handleCloseModel}
                     addBookhandler={this.addBookhandler}
+                   
                   />
                 </Modal.Body>
               </Modal>
+
+
+              <Modal
+                animation={false}
+                show={this.state.cartShow}
+                onHide={this.handleCartCloseModel}
+                size="lg"
+                aria-labelledby="contained-modal-title-vcenter"
+                centered
+              >
+                <Modal.Header closeButton>
+                  <Modal.Title>Cart Items</Modal.Title>
+                </Modal.Header>
+                <Modal.Body>
+                  <CartItems
+                    removeFromCart={this.removeFromCart}
+                    books={this.state.cartBooks}
+                  />
+                </Modal.Body>
+              </Modal>
+
+
+
             </div>
           </div>
         </div>
@@ -148,7 +190,10 @@ class App extends Component {
           {this.state.books.map((b, i) => {
             return (
               <div className="col-4" key={i} style={{ marginBottom: "20px" }}>
-                <BookDetails book={b} addToCart={this.addToCart} />
+                <BookDetails book={b} addToCart={this.addToCart} 
+                 cartBooks={this.state.cartBooks}
+                 removeFromCart={this.removeFromCart}
+                />
               </div>
             );
           })}
