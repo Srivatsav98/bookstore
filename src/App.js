@@ -38,9 +38,9 @@ class App extends Component {
 
   onSearchChangeHandler=(event)=>{
   
-    let val = event.target.value;
+    let val = event.target.value.trim();
     if(val){
-      fetch('http://localhost:8081/api/'+val)
+      fetch('http://localhost:8081/api/search/'+val)
       .then(response => response.json())
       .then(data => {
         this.setState({books:data});
