@@ -5,6 +5,8 @@ import { Component } from "react";
 import BookDetails from "./components/BookDetails";
 import BookForm from "./components/BookForm";
 import CartItems from "./components/cartitems";
+import PaymentPage from "./components/PaymentPage";
+import ThanksPage from "./components/ThanksPage";
 
 class App extends Component {
   query="popular";
@@ -12,6 +14,8 @@ class App extends Component {
     books: [],
     show: false,
     cartShow: false,
+    paymentShow:false,
+    thankShow:false,
     cartBooks: []
   };
 
@@ -25,6 +29,23 @@ class App extends Component {
     this.setState({ cartShow: !this.state.cartShow });
   };
 
+  handlePaymentCloseModel = () => {
+    this.setState({ paymentShow: !this.state.paymentShow });
+  };
+
+  handleThanksPageCloseModel = () => {
+    this.setState({ thankShow: !this.state.thankShow });
+  };
+
+  handleCheckOut = ()=> {
+    this.setState({ cartShow: !this.state.cartShow ,paymentShow:!this.state.paymentShow});
+
+  };
+  handleProceedToPay = ()=> {
+    this.setState({ paymentShow:!this.state.paymentShow,cartBooks: [],thankShow:!this.state.thankShow});
+    
+
+  };
   addToCart = (book) => {
     let books=this.state.cartBooks;
     books.push(book);
@@ -177,11 +198,43 @@ class App extends Component {
                   <CartItems
                     removeFromCart={this.removeFromCart}
                     books={this.state.cartBooks}
+                    handleCO={this.handleCheckOut}
                   />
                 </Modal.Body>
               </Modal>
 
-
+              <Modal
+                animation={false}
+                show={this.state.paymentShow}
+                onHide={this.handlePaymentCloseModel}
+                size="lg"
+                aria-labelledby="contained-modal-title-vcenter"
+                centered
+              >
+                <Modal.Header closeButton>
+                  <Modal.Title>Payment</Modal.Title>
+                </Modal.Header>
+                <Modal.Body>
+                  <PaymentPage
+                  handlePToP={this.handleProceedToPay}
+                  />
+                </Modal.Body>
+              </Modal>
+              <Modal
+                animation={false}
+                show={this.state.thankShow}
+                onHide={this.handleThanksPageCloseModel}
+                size="lg"
+                aria-labelledby="contained-modal-title-vcenter"
+                centered
+              >
+                <Modal.Header closeButton>
+                  <Modal.Title>Message</Modal.Title>
+                </Modal.Header>
+                <Modal.Body>
+                 <ThanksPage></ThanksPage>
+                </Modal.Body>
+              </Modal>
 
             </div>
           </div>

@@ -34,10 +34,10 @@ const CartItems = (props) => {
 
               </div>
 
-              <form>
+              <form  onSubmit={e => { e.preventDefault();props.handleCO(); e.target.reset();}}>
               <div className="input-group">
           <div className="ml-auto mr-3">
-            <input type="submit" className="btn btn-primary" value="Checkout"/>
+           <input type="submit" disabled={books.length==0} className="btn btn-primary" value="Checkout"/>
           </div>
         </div>
       </form>
