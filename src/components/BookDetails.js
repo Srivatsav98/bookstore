@@ -17,8 +17,11 @@ const BookDetails = (props) => {
             <li>Year:  {props.book.year}</li>
             <br/>
 
-           { props.cartBooks.indexOf(props.book)===-1  && <button className="btn btn-primary" onClick={e => props.addToCart(props.book)}>Buy</button>}
-           { props.cartBooks.indexOf(props.book)>-1  && <button className="btn btn-danger" onClick={e => props.removeFromCart(props.book)}>Remove</button>}
+           {sessionStorage.getItem("user")!=="admin" &&  props.cartBooks.indexOf(props.book)===-1  && <button className="btn btn-primary" onClick={e => props.addToCart(props.book)}>Buy</button>}
+           
+           {sessionStorage.getItem("user")!=="admin" && props.cartBooks.indexOf(props.book)>-1  && <button className="btn btn-danger" onClick={e => props.removeFromCart(props.book)}>Remove</button>}
+          
+          
           </ul>
         </div>
       </div>

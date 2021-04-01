@@ -8,7 +8,15 @@ class Login extends Component {
     state={
         email:"",
         password:"",
-        message:""
+        message:"",
+        customer:true
+    }
+
+    componentDidMount(){
+      if(sessionStorage.getItem("user")==="customer" || sessionStorage.getItem("user")==="admin"){
+        this.props.history.replace("/");
+      }
+      
     }
 
 
@@ -20,33 +28,52 @@ class Login extends Component {
     handleSubmit=(event)=> {
         this.setState({message:""})
         event.preventDefault()
-       if(this.state.email=="customer@bookstore.com" && this.state.password=="customerpwd"){
-           sessionStorage.setItem('user', "customer");
-           this.props.history.push("/");
-          
-       }
-       else{
-           this.setState({message:"Incorrect Credentials"})
-       }
+        if(this.state.customer){
+          if(this.state.email=="customer@bookstore.com" && this.state.password=="customerpwd"){
+            sessionStorage.setItem('user', "customer");
+            this.props.history.replace("/");
+           
+        }
+        else{
+            this.setState({message:"Incorrect Credentials"})
+        }
+        }
+        else{
+          if(this.state.email=="admin@bookstore.com" && this.state.password=="adminpwd"){
+            sessionStorage.setItem('user', "admin");
+            this.props.history.push("/");
+           
+        }
+        else{
+            this.setState({message:"Incorrect Credentials"})
+        }
+        }
+      
 
     }
+
+    
 
     render(){
           return(      
           
             <div className="container">
             <Navbar bg="light" expand="lg">
-              <Navbar.Brand href="#home">BookStore</Navbar.Brand>
+              <Navbar.Brand href="/">BookStore</Navbar.Brand>
               <Navbar.Toggle aria-controls="basic-navbar-nav" />
               <Navbar.Collapse id="basic-navbar-nav">
                 <Nav className="mr-auto"></Nav>
-                <p>Customer</p>
-                <p>Admin</p>
+                <button type="button" class="btn" onClick={()=>{this.setState({customer:true,email:"",password:""})}}>Customer</button>
+                <button type="button" class="btn" onClick={()=>{this.setState({customer:false,email:"",password:""})}}>Admin</button>
                 
               </Navbar.Collapse>
             </Navbar>
 
           <div className="Login">
+
+            {this.state.customer && <h3 style={{textAlign:'center'}}>Customer Login</h3>}
+            {!this.state.customer && <h3 style={{textAlign:'center'}}>Admin Login</h3>}
+            <br></br>
             <Form onSubmit={e=>this.handleSubmit(e)}>
                 <Form.Group size="lg" controlId="email">
                 <Form.Label>Email</Form.Label>

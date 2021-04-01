@@ -1,12 +1,13 @@
 import "../App.css"
 import { Navbar, Nav, Form, FormControl, Modal, Button } from "react-bootstrap";
-import { FaShoppingCart } from "react-icons/fa";
+import { FaShoppingCart,FaSignOutAlt } from "react-icons/fa";
 import { Component } from "react";
 import BookDetails from "./BookDetails";
 import BookForm from "./BookForm";
 import CartItems from "./cartitems";
 import PaymentPage from "./PaymentPage";
 import ThanksPage from "./ThanksPage";
+import { withRouter } from "react-router";
 
 class HomePage extends Component {
   query="popular";
@@ -98,11 +99,19 @@ class HomePage extends Component {
   }
 
   componentDidMount(){
-    fetch('http://localhost:8081/api/popular')
-        .then(response => response.json())
-        .then(data => {
-          this.setState({books:data});
-        });
+
+    if(sessionStorage.getItem("user")==="customer" || sessionStorage.getItem("user")==="admin"){
+      fetch('http://localhost:8081/api/popular')
+      .then(response => response.json())
+      .then(data => {
+        this.setState({books:data});
+      });
+    }
+    else{
+      this.props.history.replace("/login");
+    }
+
+
   }
 
   addBookhandler = (data) => {
@@ -123,11 +132,18 @@ class HomePage extends Component {
     });
   };
 
+  handleLogout=()=>{
+    sessionStorage.setItem('user', "");
+    this.props.history.replace("/login");
+  }
+
+ 
+
   render() {
     return (
       <div className="container">
         <Navbar bg="light" expand="lg">
-          <Navbar.Brand href="#home">BookStore</Navbar.Brand>
+          <Navbar.Brand style={{fontSize:30}} href="/">BookStore { <span style={{fontSize:20,textTransform:'capitalize'}}>- {sessionStorage.getItem("user")}</span>}</Navbar.Brand>
           <Navbar.Toggle aria-controls="basic-navbar-nav" />
           <Navbar.Collapse id="basic-navbar-nav">
             <Nav className="mr-auto"></Nav>
@@ -139,10 +155,19 @@ class HomePage extends Component {
                 onChange={this.onSearchChangeHandler.bind(this)}
               />
             </Form>
+            {sessionStorage.getItem("user")!=="admin" &&
             <a href="#">
               <FaShoppingCart onClick={this.handleCartCloseModel} />
               <sup>{this.state.cartBooks.length > 0 && this.state.cartBooks.length}</sup>
             </a>
+  }
+
+          <a href="#" style={{marginLeft:"20px"}}>
+              <FaSignOutAlt onClick={this.handleLogout} />
+              <sup>{this.state.cartBooks.length > 0 && this.state.cartBooks.length}</sup>
+            </a>
+  
+
           </Navbar.Collapse>
         </Navbar>
         <div style={{ marginTop: "25px" }}>
@@ -163,7 +188,7 @@ class HomePage extends Component {
             </div>
 
             <div>
-              <Button onClick={this.handleCloseModel}>Add new Book</Button>
+            {sessionStorage.getItem("user")!=="customer" && <Button onClick={this.handleCloseModel}>Add new Book</Button>}
 
               <Modal
                 animation={false}
@@ -261,4 +286,4 @@ class HomePage extends Component {
   }
 }
 
-export default HomePage;
+export default withRouter(HomePage);
