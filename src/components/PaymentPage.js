@@ -1,9 +1,11 @@
 import React from 'react';
 import { FaCross, FaTimes } from 'react-icons/fa';
 
+
+
+
 const PaymentPage = (props) => {
     let books=props.books;
-    
     let payment=null;
     return (
 <div>
@@ -11,7 +13,7 @@ const PaymentPage = (props) => {
             e.preventDefault();
              props.handlePToP();
 
-            e.target.reset();
+            e.target.reset(); 
           }}
             className="form-horizontal"
       >
@@ -27,10 +29,17 @@ const PaymentPage = (props) => {
               name="paymentType"
               value="debit"
               ref={node => payment = node}
+              onClick={()=>{
+                props.handlePaymentOption("debit");
+              }}
                />
           </div>
         </div>
         <br/>
+        <div hidden={props.paymentOption!="debit"}>
+        //code
+          
+        </div><br></br>
         <div className="input-group">
           <label className="col-sm-3 control-label">Credit Card </label>
           <div className="col-sm-2">
@@ -39,10 +48,17 @@ const PaymentPage = (props) => {
               name="paymentType"
               value="credit"
               ref={node => payment = node}
+              onClick={()=>{
+                props.handlePaymentOption("credit");
+              }}
                />
           </div>
         </div>
         <br/>
+        <div hidden={props.paymentOption!="credit"}>
+        //code
+          
+        </div><br></br>
         <div className="input-group">
           <label className="col-sm-3 control-label">Internet Banking</label>
           <div className="col-sm-2">
@@ -51,10 +67,17 @@ const PaymentPage = (props) => {
               name="paymentType"
               value="internet"
               ref={node => payment = node}
+              onClick={()=>{
+                props.handlePaymentOption("internet");
+              }}
                />
           </div>
         </div>
         <br/>
+        <div hidden={props.paymentOption!="internet"}>
+        //code
+        
+        </div><br></br>
         <div className="input-group">
           <label className="col-sm-3 control-label">UPI</label>
           <div className="col-sm-2">
@@ -63,10 +86,17 @@ const PaymentPage = (props) => {
               name="paymentType"
               value="upi"
               ref={node => payment = node}
+              onClick={()=>{
+                props.handlePaymentOption("upi");
+              }}
                />
           </div>
         </div>
         <br/>
+        <div hidden={props.paymentOption!="upi"}>
+          
+          //code
+        </div><br></br>
         <div className="input-group">
         <div className="input-group">
           <div className="ml-auto mr-3">
