@@ -164,7 +164,7 @@ class HomePage extends Component {
 
           <a href="#" style={{marginLeft:"20px"}}>
               <FaSignOutAlt onClick={this.handleLogout} />
-              <sup>{this.state.cartBooks.length > 0 && this.state.cartBooks.length}</sup>
+              
             </a>
   
 
