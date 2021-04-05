@@ -1,4 +1,5 @@
 import React from 'react';
+import { FaEdit, FaTrash } from 'react-icons/fa';
 
 const BookDetails = (props) => {
     return (
@@ -16,6 +17,10 @@ const BookDetails = (props) => {
             <li>Price:  ${props.book.price}</li>
             <li>Year:  {props.book.year}</li>
             <br/>
+            {sessionStorage.getItem("user")!=="customer"  && <button className="btn" onClick={e => props.deleteBook(props.book)}> <FaEdit style={{color:"blue"}}></FaEdit> </button>}
+            {sessionStorage.getItem("user")!=="customer"  && <button className="btn" style={{marginLeft:"20px"}} onClick={e =>  props.deleteBook(props.book)}> <FaTrash style={{color:"red"}}></FaTrash> </button>}
+
+            
 
            {sessionStorage.getItem("user")!=="admin" &&  props.cartBooks.indexOf(props.book)===-1  && <button className="btn btn-primary" onClick={e => props.addToCart(props.book)}>Buy</button>}
            

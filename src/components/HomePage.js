@@ -56,6 +56,25 @@ class HomePage extends Component {
     this.setState({ cartBooks: books });
   };
 
+  deleteBook = (book) => {
+    console.log(book._id)
+    fetch("http://localhost:8081/api/delete/"+book._id, {
+      method: "DELETE",
+      headers: {
+        Accept: "application/json",
+        "Content-Type": "application/json",
+      },
+    }).then(response => response.json()).then(out=>{
+      console.log(out);
+      let books=this.state.books;
+      const index = books.indexOf(book);
+      if (index > -1) {
+        books.splice(index, 1);
+      }
+      this.setState({ books: books });
+    });
+  };
+
   removeFromCart = (book) => {
     let books=this.state.cartBooks;
     const index = books.indexOf(book);
@@ -275,6 +294,7 @@ class HomePage extends Component {
               <div className="col-4" key={i} style={{ marginBottom: "20px" }}>
                 <BookDetails book={b} addToCart={this.addToCart} 
                  cartBooks={this.state.cartBooks}
+                 deleteBook={this.deleteBook}
                  removeFromCart={this.removeFromCart}
                 />
               </div>
