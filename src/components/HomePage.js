@@ -18,7 +18,10 @@ class HomePage extends Component {
     paymentShow:false,
     thankShow:false,
     cartBooks: [],
-    paymentOption:"none"
+    paymentOption:"none",
+    modalType:"new",
+    curBook:{},
+    inputs:{}
   };
 
   handlePaymentOption=(option)=>{
@@ -26,7 +29,10 @@ class HomePage extends Component {
   }
 
   handleCloseModel = () => {
+    if(!this.state.show)
+    this.setState({ modalType: "new",curBook:{} });
     this.setState({ show: !this.state.show });
+    
   };
 
   handleCartCloseModel = () => {
@@ -55,6 +61,10 @@ class HomePage extends Component {
     books.push(book);
     this.setState({ cartBooks: books });
   };
+  updateBook=(book)=>{
+    this.setState({modalType: "update"})
+    this.setState({ show: !this.state.show,curBook:book });
+  }
 
   deleteBook = (book) => {
     console.log(book._id)
@@ -134,21 +144,44 @@ class HomePage extends Component {
   }
 
   addBookhandler = (data) => {
-    fetch("http://localhost:8081/api/book/", {
-      method: "POST",
-      headers: {
-        Accept: "application/json",
-        "Content-Type": "application/json",
-      },
-      body: JSON.stringify(data)
-    }).then(response => response.json()).then(out=>{
-      console.log(out);
-      fetch('http://localhost:8081/api/'+this.query)
-      .then(response => response.json())
-      .then(data => {
-        this.setState({books:data});
+
+    if(this.state.modalType==="update"){
+
+      fetch("http://localhost:8081/api/update/"+data._id, {
+        method: "PUT",
+        headers: {
+          Accept: "application/json",
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify(data)
+      }).then(response => response.json()).then(out=>{
+        console.log(out);
+        fetch('http://localhost:8081/api/'+this.query)
+        .then(response => response.json())
+        .then(data => {
+          this.setState({books:data});
+        });
       });
-    });
+    }
+    else{
+      fetch("http://localhost:8081/api/book/", {
+        method: "POST",
+        headers: {
+          Accept: "application/json",
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify(data)
+      }).then(response => response.json()).then(out=>{
+        console.log(out);
+        fetch('http://localhost:8081/api/'+this.query)
+        .then(response => response.json())
+        .then(data => {
+          this.setState({books:data});
+        });
+      });
+    }
+
+    
   };
 
   handleLogout=()=>{
@@ -160,13 +193,22 @@ class HomePage extends Component {
 
   render() {
     return (
-      <div className="container">
+      <div style={{padding:"5px"}}>
         <Navbar bg="light" expand="lg">
           <Navbar.Brand style={{fontSize:30}} href="/">BookStore { <span style={{fontSize:20,textTransform:'capitalize'}}>- {sessionStorage.getItem("user")}</span>}</Navbar.Brand>
           <Navbar.Toggle aria-controls="basic-navbar-nav" />
           <Navbar.Collapse id="basic-navbar-nav">
             <Nav className="mr-auto"></Nav>
-            <Form inline style={{ marginRight: "20px " }}>
+            <a href="/" style={{marginLeft:"20px"}}>
+              <span>Home</span>
+            </a>
+            <a href="/contact" style={{marginLeft:"20px"}}>
+              <span>Contact</span>
+            </a>
+            <a href="/about" style={{marginLeft:"20px"}}>
+              <span>About Us</span>
+            </a>
+            <Form inline style={{marginLeft:"20px"}}>
               <FormControl
                 type="text"
                 placeholder="Search"
@@ -174,8 +216,9 @@ class HomePage extends Component {
                 onChange={this.onSearchChangeHandler.bind(this)}
               />
             </Form>
+
             {sessionStorage.getItem("user")!=="admin" &&
-            <a href="#">
+            <a href="#" Z>
               <FaShoppingCart onClick={this.handleCartCloseModel} />
               <sup>{this.state.cartBooks.length > 0 && this.state.cartBooks.length}</sup>
             </a>
@@ -189,7 +232,7 @@ class HomePage extends Component {
 
           </Navbar.Collapse>
         </Navbar>
-        <div style={{ marginTop: "25px" }}>
+        <div style={{ marginTop: "25px",marginLeft:"30px",marginRight:"30px" }}>
           <div className="d-flex justify-content-between">
             <div>
               <Form.Group>
@@ -218,10 +261,12 @@ class HomePage extends Component {
                 centered
               >
                 <Modal.Header closeButton>
-                  <Modal.Title>Add a new Book</Modal.Title>
+                  <Modal.Title>{this.state.modalType=="new" && "Add a new Book"} {this.state.modalType=="update" && "Update the Book"}</Modal.Title>
                 </Modal.Header>
                 <Modal.Body>
                   <BookForm
+                   type={this.state.modalType}
+                   curBook={this.state.curBook}
                     handleCloseModel={this.handleCloseModel}
                     addBookhandler={this.addBookhandler}
                    
@@ -288,12 +333,14 @@ class HomePage extends Component {
             </div>
           </div>
         </div>
-        <div className="row" style={{ marginTop: "5px" }}>
+        <div className="row" style={{ marginTop: "5px",marginLeft:"30px",marginRight:"30px" }}>
           {this.state.books.map((b, i) => {
             return (
               <div className="col-4" key={i} style={{ marginBottom: "20px" }}>
                 <BookDetails book={b} addToCart={this.addToCart} 
                  cartBooks={this.state.cartBooks}
+                
+                 updateBook={this.updateBook}
                  deleteBook={this.deleteBook}
                  removeFromCart={this.removeFromCart}
                 />

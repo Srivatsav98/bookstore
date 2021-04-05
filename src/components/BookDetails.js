@@ -1,12 +1,17 @@
 import React from 'react';
-import { FaEdit, FaTrash } from 'react-icons/fa';
+import { FaEdit, FaStar, FaTrash } from 'react-icons/fa';
 
 const BookDetails = (props) => {
+    let rating=[];
+    for(let i=0;i<props.book.rating;i++){
+      rating.push(<FaStar key={i} style={{color:"gold",marginRight:"2px"}}></FaStar>);
+    }
+    console.log(rating)
     return (
       <div className="media overflow-auto">
         <div className="media-top">
           <a href="#">
-            <img className="media-object" height="200" src="http://placehold.it/200x280" alt="Placehold" />
+            <img className="media-object" height="250" src="http://placehold.it/200x280" alt="Placehold" />
           </a>
         </div>
         <div className="media-body">
@@ -14,10 +19,14 @@ const BookDetails = (props) => {
           <ul>
           <h4>{props.book.title}</h4>
             <li>Author:  {props.book.author}</li>
+            <li>Publisher:  {props.book.publisher}</li>
             <li>Price:  ${props.book.price}</li>
             <li>Year:  {props.book.year}</li>
-            <br/>
-            {sessionStorage.getItem("user")!=="customer"  && <button className="btn" onClick={e => props.deleteBook(props.book)}> <FaEdit style={{color:"blue"}}></FaEdit> </button>}
+            <div style={{marginLeft:"-10px",marginTop:"5px",marginBottom:"-15px"}}>{rating}</div>
+           
+            <br></br>
+
+            {sessionStorage.getItem("user")!=="customer"  && <button className="btn" onClick={e => props.updateBook(props.book)}> <FaEdit style={{color:"blue"}}></FaEdit> </button>}
             {sessionStorage.getItem("user")!=="customer"  && <button className="btn" style={{marginLeft:"20px"}} onClick={e =>  props.deleteBook(props.book)}> <FaTrash style={{color:"red"}}></FaTrash> </button>}
 
             
