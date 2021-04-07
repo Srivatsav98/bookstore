@@ -19,6 +19,7 @@ const BookDetails = (props) => {
           <ul>
           <h4>{props.book.title}</h4>
             <li>Author:  {props.book.author}</li>
+            <li>Category:  {props.book.category}</li>
             <li>Publisher:  {props.book.publisher}</li>
             <li>Price:  ${props.book.price}</li>
             <li>Year:  {props.book.year}</li>

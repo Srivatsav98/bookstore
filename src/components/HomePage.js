@@ -21,7 +21,10 @@ class HomePage extends Component {
     paymentOption:"none",
     modalType:"new",
     curBook:{},
-    inputs:{}
+    inputs:{},
+    authors:[],
+    author:"",
+    category:""
   };
 
   handlePaymentOption=(option)=>{
@@ -108,6 +111,25 @@ class HomePage extends Component {
     });
   };
 
+  handleAuthorChange=(event)=>{
+    let val=event.target.value;
+    this.setState({author:val})
+    fetch('http://localhost:8081/api/filter/?author='+val+"&category="+this.state.category)
+    .then(response => response.json())
+    .then(data => {
+      this.setState({books:data});
+    });
+  }
+  handleCategoryChange=(event)=>{
+    let val=event.target.value;
+    this.setState({category:val})
+    fetch('http://localhost:8081/api/filter/?category='+val+"&author="+this.state.author)
+    .then(response => response.json())
+    .then(data => {
+      this.setState({books:data});
+    });
+  }
+
   onSearchChangeHandler=(event)=>{
   
     let val = event.target.value.trim();
@@ -134,6 +156,21 @@ class HomePage extends Component {
       .then(response => response.json())
       .then(data => {
         this.setState({books:data});
+      });
+      fetch('http://localhost:8081/api/fetchauthors')
+      .then(response => response.json())
+      .then(data => {
+        
+        let uniqueArray = data.filter(function(item, pos, self) {
+          return self.indexOf(item.toLowerCase()) === pos;
+          })
+           uniqueArray = uniqueArray.map(function(item, pos, self) {
+            return item.charAt(0).toUpperCase() + item.slice(1);
+            })
+        
+        
+        this.setState({authors:uniqueArray});
+
       });
     }
     else{
@@ -249,6 +286,48 @@ class HomePage extends Component {
               </Form.Group>
             </div>
 
+            <div>
+            <div className="input-group">
+            <label className="col-sm-3 control-label" style={{marginTop:"5px"}}>Author: </label>
+          <div className="col-sm-9">
+
+                <FormControl
+                  as="select"
+                  style={{ width: "200px" }}
+                  placeholder=""
+                  onChange={this.handleAuthorChange.bind(this)}
+                >
+                    <option value="" selected>Choose one</option>
+                   {this.state.authors.map((author, i) => {
+                     return <option key={i} value={author}>{author}</option>
+                   })}
+                </FormControl>
+              </div>
+            </div>
+            </div>
+
+            <div>
+            <div className="input-group">
+            <label className="col-sm-3 control-label" style={{marginTop:"5px"}}>Category: </label>
+          <div className="col-sm-9">
+
+                <FormControl
+                  as="select"
+                  style={{ width: "200px" }}
+                  placeholder=""
+                  onChange={this.handleCategoryChange.bind(this)}
+                >
+                    <option value="" selected>Choose one</option>
+                    <option>Action and adventure</option>
+              <option>Comic</option>
+              <option>Drama</option>
+              <option>Horror</option>
+              <option>Thriller</option>
+                </FormControl>
+              </div>
+            </div>
+            </div>
+            
             <div>
             {sessionStorage.getItem("user")!=="customer" && <Button onClick={this.handleCloseModel}>Add new Book</Button>}
 
