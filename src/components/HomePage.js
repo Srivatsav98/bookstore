@@ -160,12 +160,14 @@ class HomePage extends Component {
       fetch('http://localhost:8081/api/fetchauthors')
       .then(response => response.json())
       .then(data => {
-        
-        let uniqueArray = data.filter(function(item, pos, self) {
-          return self.indexOf(item.toLowerCase()) === pos;
+        let uniqueArray = data.map(function(item, pos, self) {
+          return item.toUpperCase();
+          })
+         uniqueArray = uniqueArray.filter(function(item, pos, self) {
+          return self.indexOf(item) === pos;
           })
            uniqueArray = uniqueArray.map(function(item, pos, self) {
-            return item.charAt(0).toUpperCase() + item.slice(1);
+            return item.charAt(0).toUpperCase() + item.slice(1).toLowerCase();
             })
         
         
@@ -178,6 +180,25 @@ class HomePage extends Component {
     }
 
 
+  }
+  refreshAuthor(){
+    fetch('http://localhost:8081/api/fetchauthors')
+    .then(response => response.json())
+    .then(data => {
+      let uniqueArray = data.map(function(item, pos, self) {
+        return item.toUpperCase();
+        })
+       uniqueArray = uniqueArray.filter(function(item, pos, self) {
+        return self.indexOf(item) === pos;
+        })
+         uniqueArray = uniqueArray.map(function(item, pos, self) {
+          return item.charAt(0).toUpperCase() + item.slice(1).toLowerCase();
+          })
+      
+      
+      this.setState({authors:uniqueArray});
+
+    });
   }
 
   addBookhandler = (data) => {
@@ -197,6 +218,7 @@ class HomePage extends Component {
         .then(response => response.json())
         .then(data => {
           this.setState({books:data});
+          this.refreshAuthor();
         });
       });
     }
@@ -214,9 +236,12 @@ class HomePage extends Component {
         .then(response => response.json())
         .then(data => {
           this.setState({books:data});
+          this.refreshAuthor();
         });
       });
     }
+
+
 
     
   };
