@@ -1,8 +1,6 @@
 
-import { render } from '@testing-library/react';
+import './PaymentPageStyle.css';
 import React from 'react';
-import { FaCross, FaTimes } from 'react-icons/fa';
-
 const PaymentPage = (props) => {
     let books=props.books;
     let payment=null;
@@ -57,22 +55,22 @@ const PaymentPage = (props) => {
         <div hidden={props.paymentOption!="credit"}>
         
         
-        <form class="credit-card">
-  <div class="form-header">
-    <h4 class="title">Credit card detail</h4>
+        <form className="credit-card">
+  <div className="form-header">
+    <h4 className="title">Credit card detail</h4>
   </div>
 
-  <div class="form-body">
+  <div className="form-body">
   
-    <input type="text" class="card-number" placeholder="Card Number"/>
+    <input type="text" className="card-number" placeholder="Card Number"/>
     
   
 
-    <div class="expiry-date">
+    <div className="expiry-date">
         <p>Card Expiry Date</p>
       </div>
-    <div class="date-field">
-      <div class="month">
+    <div className="date-field">
+      <div className="month">
         <select name="Month">
           <option value="january">January</option>
           <option value="february">February</option>
@@ -88,7 +86,7 @@ const PaymentPage = (props) => {
           <option value="december">December</option>
         </select>
       </div>
-      <div class="year">
+      <div className="year">
         <select name="Year">
           <option value="2016">2016</option>
           <option value="2017">2017</option>
@@ -104,17 +102,17 @@ const PaymentPage = (props) => {
     </div>
  
     
-    <div class="card-verification">
-      <div class="cvv-input">
+    <div className="card-verification">
+      <div className="cvv-input">
         <input type="text" placeholder="CVV"/>
       </div>
-      <div class="cvv-details">
+      <div className="cvv-details">
         <p>3 or 4 digits usually found <br/> on the signature strip</p>
       </div>
     </div>
  
     
-    <button type="submit" class="proceed-btn"><a href="#">Proceed</a></button>
+    <button type="submit" className="proceed-btn"><a href="#">Proceed</a></button>
   
   </div>
 </form>

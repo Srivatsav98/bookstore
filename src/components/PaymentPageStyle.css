@@ -20,7 +20,7 @@ body {
 .credit-card {
     width: 360px;
     height: 400px;
-    margin: 60px auto 0;
+    margin: 1px auto 0;
     border: 1px solid #ddd;
     border-radius: 6px;
     background-color: #fff;
@@ -89,7 +89,7 @@ body {
     padding-left: 20px;
     border: 2px solid #e1e8ee;
     border-radius: 6px;
-    background: url('caret.png') no-repeat;
+    background: url('./caret.png') no-repeat;
     background-position: 85% 50%;
     -moz-appearance: none;
     -webkit-appearance: none;
@@ -155,5 +155,5 @@ body {
  
 .paypal-btn {
     padding-right: 95px;
-    background: url('paypal-logo.svg') no-repeat 65% 56% #009cde;
+    background: url('./paypal.png') no-repeat 65% 56% #009cde;
 }
