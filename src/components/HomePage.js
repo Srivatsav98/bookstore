@@ -148,7 +148,8 @@ class HomePage extends Component {
       });
     }
   }
-
+  
+  
   componentDidMount(){
 
     if(sessionStorage.getItem("user")==="customer" || sessionStorage.getItem("user")==="admin"){
@@ -279,7 +280,7 @@ class HomePage extends Component {
               />
             </Form>
 
-            {sessionStorage.getItem("user")!=="admin" &&
+            {sessionStorage.getItem("user")==="customer" &&
             <a href="#" Z>
               <FaShoppingCart onClick={this.handleCartCloseModel} />
               <sup>{this.state.cartBooks.length > 0 && this.state.cartBooks.length}</sup>
@@ -441,7 +442,8 @@ class HomePage extends Component {
           {this.state.books.map((b, i) => {
             return (
               <div className="col-4" key={i} style={{ marginBottom: "20px" }}>
-                <BookDetails book={b} addToCart={this.addToCart} 
+                <BookDetails book={b} 
+                addToCart={this.addToCart} 
                  cartBooks={this.state.cartBooks}
                 
                  updateBook={this.updateBook}
