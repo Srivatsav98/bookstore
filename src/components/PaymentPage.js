@@ -34,9 +34,74 @@ const PaymentPage = (props) => {
         </div>
         <br/>
         <div hidden={props.paymentOption!="debit"}>
-        //code
+        
+
           
-        </div><br></br>
+        <form className="debit-card">
+  <div className="form-header">
+    <h4 className="title">Debit card details</h4>
+  </div>
+
+  <div className="form-body">
+  
+    <input type="text" className="card-number" placeholder="Card Number"/>
+    <input type="text" className="Name-CardHolder" placeholder="Name of the CardHolder"/>
+    
+  
+
+    <div className="expiry-date">
+        <p>Card Expiry Date</p>
+      </div>
+    <div className="date-field">
+      <div className="month">
+        <select name="Month">
+          <option value="january">January</option>
+          <option value="february">February</option>
+          <option value="march">March</option>
+          <option value="april">April</option>
+          <option value="may">May</option>
+          <option value="june">June</option>
+          <option value="july">July</option>
+          <option value="august">August</option>
+          <option value="september">September</option>
+          <option value="october">October</option>
+          <option value="november">November</option>
+          <option value="december">December</option>
+        </select>
+      </div>
+      <div className="year">
+        <select name="Year">
+          <option value="2016">2016</option>
+          <option value="2017">2017</option>
+          <option value="2018">2018</option>
+          <option value="2019">2019</option>
+          <option value="2020">2020</option>
+          <option value="2021">2021</option>
+          <option value="2022">2022</option>
+          <option value="2023">2023</option>
+          <option value="2024">2024</option>
+        </select>
+      </div>
+    </div>
+ 
+    
+    <div className="card-verification">
+      <div className="cvv-input">
+        <input type="text" placeholder="CVV"/>
+      </div>
+      <div className="cvv-details">
+        <p>3 or 4 digits usually found <br/> on the signature strip</p>
+      </div>
+    </div>
+ 
+  </div>
+</form>
+       
+</div>
+
+        <br></br>
+
+        
         <div className="input-group">
           <label className="col-sm-3 control-label">Credit Card </label>
           <div className="col-sm-2">
@@ -57,13 +122,13 @@ const PaymentPage = (props) => {
         
         <form className="credit-card">
   <div className="form-header">
-    <h4 className="title">Credit card detail</h4>
+    <h4 className="title">Credit card details</h4>
   </div>
 
   <div className="form-body">
   
     <input type="text" className="card-number" placeholder="Card Number"/>
-    
+    <input type="text" className="Name-CardHolder" placeholder="Name of the CardHolder"/>
   
 
     <div className="expiry-date">
@@ -134,7 +199,26 @@ const PaymentPage = (props) => {
         </div>
         <br/>
         <div hidden={props.paymentOption!="internet"}>
-        //code
+        
+
+        
+        <form className="internetBanking">
+  <div className="form-header">
+    <h4 className="title">Internet Banking details</h4>
+  </div>
+
+  <div className="form-body">
+  
+    <input type="text" className="card-number" placeholder="Account Number"/>
+
+    <input type="text" className="Name-CardHolder" placeholder="Name of the account holder"/>
+  
+    <input type="text" className="card-number" placeholder="IFSC Code"/>
+
+    <input type="text" className="card-number" placeholder="Remarks "/>
+
+  </div>
+</form>
         
         </div><br></br>
         <div className="input-group">
@@ -154,7 +238,23 @@ const PaymentPage = (props) => {
         <br/>
         <div hidden={props.paymentOption!="upi"}>
           
-          //code
+        <form className="upi">
+  <div className="form-header">
+    <h4 className="title">UPI details</h4>
+  </div>
+
+  <div className="form-body">
+  
+    <input type="text" className="card-number" placeholder="UPI ID or VPA"/>
+
+    <input type="text" className="card-number" placeholder="Phone Number"/>
+
+
+  </div>
+</form>
+        
+
+
         </div><br></br>
         <div className="input-group">
         <div className="input-group">

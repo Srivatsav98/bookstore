@@ -17,9 +17,29 @@ body {
 }
 
 /* Credit Card */
-.credit-card {
+.credit-card, .internetBanking{
     width: 360px;
     height: 300px;
+    margin: 1px auto 0;
+    border: 1px solid #ddd;
+    border-radius: 6px;
+    background-color: #fff;
+    box-shadow: 1px 2px 3px 0 rgba(0,0,0,.10);
+}
+
+.debit-card {
+    width: 360px;
+    height: 300px;
+    margin: 1px auto 0;
+    border: 1px solid #ddd;
+    border-radius: 6px;
+    background-color: #fff;
+    box-shadow: 1px 2px 3px 0 rgba(0,0,0,.10);
+}
+
+.upi {
+    width: 360px;
+    height: 200px;
     margin: 1px auto 0;
     border: 1px solid #ddd;
     border-radius: 6px;
@@ -47,6 +67,7 @@ body {
 
 /* Common */
 .card-number,
+.Name-CardHolder,
 .cvv-input input,
 .month select,
 .year select {
@@ -56,6 +77,7 @@ body {
 }
  
 .card-number,
+.Name-CardHolder,
 .month select,
 .year select {
     font-size: 14px;
@@ -64,6 +86,7 @@ body {
 }
  
 .card-number,
+.Name-CardHolder,
 .cvv-details,
 .cvv-input input,
 .month select,
@@ -74,6 +97,13 @@ body {
 
 /* Card Number */
 .card-number {
+    width: 100%;
+    margin-bottom: 20px;
+    padding-left: 20px;
+    border: 2px solid #e1e8ee;
+    border-radius: 6px;
+}
+.Name-CardHolder {
     width: 100%;
     margin-bottom: 20px;
     padding-left: 20px;
@@ -125,35 +155,3 @@ body {
     margin-top: 6px;
 }
 
-/* Buttons Section */
-.paypal-btn,
-.proceed-btn {
-    cursor: pointer;
-    font-size: 16px;
-    width: 100%;
-    border-color: transparent;
-    border-radius: 6px;
-}
- 
-.proceed-btn {
-    margin-bottom: 10px;
-    background: #7dc855;
-}
- 
-.paypal-btn a,
-.proceed-btn a {
-    text-decoration: none;
-}
- 
-.proceed-btn a {
-    color: #fff;
-}
- 
-.paypal-btn a {
-    color: rgba(242, 242, 242, .7);
-}
- 
-.paypal-btn {
-    padding-right: 95px;
-    background: url('./paypal.png') no-repeat 65% 56% #009cde;
-}
