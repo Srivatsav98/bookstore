@@ -111,9 +111,6 @@ const PaymentPage = (props) => {
       </div>
     </div>
  
-    
-    <button type="submit" className="proceed-btn"><a href="#">Proceed</a></button>
-  
   </div>
 </form>
 
