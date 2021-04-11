@@ -41,7 +41,7 @@ class Login extends Component {
         else{
           if(this.state.email=="admin@bookstore.com" && this.state.password=="adminpwd"){
             sessionStorage.setItem('user', "admin");
-            this.props.history.push("/");
+            this.props.history.replace("/");
            
         }
         else{
