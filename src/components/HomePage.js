@@ -31,6 +31,15 @@ class HomePage extends Component {
     this.setState({paymentOption:option})
   }
 
+  handleQuantity=(book,incr)=>{
+    let books=this.state.cartBooks;
+    const index = books.indexOf(book);
+    books[index].count+=incr;
+    if(books[index].count<0)
+      books[index].count=0;
+    this.setState({ cartBooks: books });
+  }
+
   handleCloseModel = () => {
     if(!this.state.show)
     this.setState({ modalType: "new",curBook:{} });
@@ -60,6 +69,7 @@ class HomePage extends Component {
 
   };
   addToCart = (book) => {
+    book.count=1;
     let books=this.state.cartBooks;
     books.push(book);
     this.setState({ cartBooks: books });
@@ -396,6 +406,7 @@ class HomePage extends Component {
                     removeFromCart={this.removeFromCart}
                     books={this.state.cartBooks}
                     handleCO={this.handleCheckOut}
+                    handleQuantity={this.handleQuantity}
                   />
                 </Modal.Body>
               </Modal>
@@ -438,7 +449,7 @@ class HomePage extends Component {
             </div>
           </div>
         </div>
-        <div className="row" style={{ marginTop: "5px",marginLeft:"30px",marginRight:"30px" }}>
+        <div className="row" style={{ marginTop: "30px",marginLeft:"30px",marginRight:"30px" }}>
           {this.state.books.map((b, i) => {
             return (
               <div className="col-4" key={i} style={{ marginBottom: "20px" }}>

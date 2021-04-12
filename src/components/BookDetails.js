@@ -11,7 +11,7 @@ const BookDetails = (props) => {
       <div className="media overflow-auto">
         <div className="media-top">
           <a href="#">
-            <img className="media-object" height="250" src="http://placehold.it/200x280" alt="Placehold" />
+            <img className="media-object" height="280" width="200" src={props.book.bookUrl} alt="Placehold" />
           </a>
         </div>
         <div className="media-body">

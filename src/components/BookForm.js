@@ -2,7 +2,7 @@
 import React from 'react';
 
 const BookForm = (props) => {
-    let titleInput, authorInput, priceInput, yearInput,ratingInput,publisherInput,categoryInput = null;
+    let titleInput, authorInput, priceInput, yearInput,ratingInput,publisherInput,categoryInput,bookUrlInput = null;
     return (
       <form onSubmit={e => {
             e.preventDefault();
@@ -13,7 +13,8 @@ const BookForm = (props) => {
               year: yearInput.value,
               rating:ratingInput.value,
               publisher:publisherInput.value,
-              category:categoryInput.value
+              category:categoryInput.value,
+              bookUrl:bookUrlInput.value
             };
             if(props.type==="update")
             data["_id"]=props.curBook._id
@@ -62,6 +63,18 @@ const BookForm = (props) => {
               <option>Horror</option>
               <option>Thriller</option>
             </select>
+          </div>
+        </div>
+        <br/>
+        <div className="input-group">
+          <label className="col-sm-2 control-label">Image: </label>
+          <div className="col-sm-10">
+            <input required
+              defaultValue={props.curBook.url}
+              type="url"
+              name="bookUrl"
+              ref={node => bookUrlInput = node}
+              className="form-control" />
           </div>
         </div>
         <br/>

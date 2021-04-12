@@ -57,9 +57,9 @@ class Login extends Component {
     render(){
           return(      
           
-            <div className="container">
+            <div style={{padding:"5px"}}>
             <Navbar bg="light" expand="lg">
-              <Navbar.Brand href="/">BookStore</Navbar.Brand>
+            <Navbar.Brand style={{fontSize:30}} href="/">BookStore</Navbar.Brand>
               <Navbar.Toggle aria-controls="basic-navbar-nav" />
               <Navbar.Collapse id="basic-navbar-nav">
                 <Nav className="mr-auto"></Nav>
