@@ -27,7 +27,7 @@ const BookDetails = (props) => {
            
             <br></br>
 
-            {sessionStorage.getItem("user")!=="customer"  && <button className="btn" onClick={e => props.updateBook(props.book)}> <FaEdit style={{color:"blue"}}></FaEdit> </button>}
+            {sessionStorage.getItem("user")!=="customer"  && <button className="btn" onClick={e => props.updateBook(props.book)}> <FaEdit style={{color:"#2871a1"}}></FaEdit> </button>}
             {sessionStorage.getItem("user")!=="customer"  && <button className="btn" style={{marginLeft:"20px"}} onClick={e =>  props.deleteBook(props.book)}> <FaTrash style={{color:"red"}}></FaTrash> </button>}
 
             

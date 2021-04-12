@@ -70,7 +70,7 @@ const BookForm = (props) => {
           <label className="col-sm-2 control-label">Image: </label>
           <div className="col-sm-10">
             <input required
-              defaultValue={props.curBook.url}
+              defaultValue={props.curBook.bookUrl}
               type="url"
               name="bookUrl"
               ref={node => bookUrlInput = node}

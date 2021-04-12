@@ -266,9 +266,9 @@ class HomePage extends Component {
 
   render() {
     return (
-      <div style={{padding:"5px"}}>
-        <Navbar bg="light" expand="lg">
-          <Navbar.Brand style={{fontSize:30}} href="/">BookStore { <span style={{fontSize:20,textTransform:'capitalize'}}>- {sessionStorage.getItem("user")}</span>}</Navbar.Brand>
+      <div>
+        <Navbar className="navbar" expand="lg">
+          <Navbar.Brand style={{fontSize:30,color:"white"}} href="/">BookStore { <span style={{fontSize:20,textTransform:'capitalize'}}>- {sessionStorage.getItem("user")}</span>}</Navbar.Brand>
           <Navbar.Toggle aria-controls="basic-navbar-nav" />
           <Navbar.Collapse id="basic-navbar-nav">
             <Nav className="mr-auto"></Nav>
