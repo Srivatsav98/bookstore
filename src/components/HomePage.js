@@ -354,7 +354,7 @@ class HomePage extends Component {
                   onChange={this.handleCategoryChange.bind(this)}
                 >
                     <option value="" selected>Choose one</option>
-                    <option>Action and adventure</option>
+                    <option>Adventure</option>
               <option>Comic</option>
               <option>Drama</option>
               <option>Horror</option>
