@@ -57,7 +57,7 @@ const BookForm = (props) => {
               name="category"
               ref={node => categoryInput = node}
               className="form-control" >  
-              <option>Action and adventure</option>
+              <option>Adventure</option>
               <option>Comic</option>
               <option>Drama</option>
               <option>Horror</option>
