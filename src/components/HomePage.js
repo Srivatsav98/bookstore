@@ -171,11 +171,12 @@ class HomePage extends Component {
       fetch('http://localhost:8081/api/fetchauthors')
       .then(response => response.json())
       .then(data => {
-        let uniqueArray = data.map(function(item, pos, self) {
-          return item.toUpperCase();
+        let array = data.map(function(item, pos, self) {
+          return item.toLowerCase().trim();
           })
-         uniqueArray = uniqueArray.filter(function(item, pos, self) {
-          return self.indexOf(item) === pos;
+       
+         let uniqueArray = array.filter(function(item, pos, self) {
+          return array.indexOf(item) === pos;
           })
            uniqueArray = uniqueArray.map(function(item, pos, self) {
             return item.charAt(0).toUpperCase() + item.slice(1).toLowerCase();
@@ -193,14 +194,16 @@ class HomePage extends Component {
 
   }
   refreshAuthor(){
+   
     fetch('http://localhost:8081/api/fetchauthors')
     .then(response => response.json())
     .then(data => {
-      let uniqueArray = data.map(function(item, pos, self) {
-        return item.toUpperCase();
+      let array = data.map(function(item, pos, self) {
+        return item.toLowerCase().trim();
         })
-       uniqueArray = uniqueArray.filter(function(item, pos, self) {
-        return self.indexOf(item) === pos;
+     
+       let uniqueArray = array.filter(function(item, pos, self) {
+        return array.indexOf(item) === pos;
         })
          uniqueArray = uniqueArray.map(function(item, pos, self) {
           return item.charAt(0).toUpperCase() + item.slice(1).toLowerCase();
