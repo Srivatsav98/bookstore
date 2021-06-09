@@ -162,7 +162,10 @@ class HomePage extends Component {
   
   componentDidMount(){
 
-    if(sessionStorage.getItem("user")==="customer" || sessionStorage.getItem("user")==="admin"){
+    const currentDate = new Date();
+    var timestamp2 = sessionStorage.getItem("loginTime");
+
+    if((sessionStorage.getItem("user")==="customer" || sessionStorage.getItem("user")==="admin") && currentDate.getTime() - timestamp2 < 60000){
       fetch('http://localhost:8081/api/popular')
       .then(response => response.json())
       .then(data => {

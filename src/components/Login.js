@@ -13,7 +13,12 @@ class Login extends Component {
     }
 
     componentDidMount(){
-      if(sessionStorage.getItem("user")==="customer" || sessionStorage.getItem("user")==="admin"){
+      
+      const currentDate = new Date();
+      var timestamp2 = sessionStorage.getItem("loginTime");
+  
+      if((sessionStorage.getItem("user")==="customer" || sessionStorage.getItem("user")==="admin") && currentDate.getTime() - timestamp2 < 60000){
+
         this.props.history.replace("/");
       }
       
@@ -31,6 +36,12 @@ class Login extends Component {
         if(this.state.customer){
           if(this.state.email=="customer@bookstore.com" && this.state.password=="customerpwd"){
             sessionStorage.setItem('user', "customer");
+
+            const currentDate = new Date();
+            const timestamp = currentDate.getTime();
+
+            sessionStorage.setItem('loginTime', timestamp);
+
             this.props.history.replace("/");
            
         }
@@ -41,6 +52,12 @@ class Login extends Component {
         else{
           if(this.state.email=="admin@bookstore.com" && this.state.password=="adminpwd"){
             sessionStorage.setItem('user', "admin");
+
+            const currentDate = new Date();
+            const timestamp = currentDate.getTime();
+            
+            sessionStorage.setItem('loginTime', timestamp);
+
             this.props.history.replace("/");
            
         }
